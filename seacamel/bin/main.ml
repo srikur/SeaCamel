@@ -15,6 +15,6 @@ let print_list l =
 let () =
     Arg.parse spec (fun anon_arg -> Printf.printf "Anonymous argument: %s\n" anon_arg) usage_msg;
     Printf.printf "Input file: %s\n" !input_file;
-    let tokens = (Seacamel.Lexer.tokenize (In_channel.read_all !input_file)) in
+    let tokens = (Lexer.tokenize (In_channel.read_all !input_file)) in
     print_list tokens
 

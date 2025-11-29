@@ -1,3 +1,7 @@
+#include "stdio.h"
+
 int main() {
-    return 2;
+    int x = 3 + 4;
+    printf("The sum is %d\n", x);
+    return 0;
 }
