@@ -66,12 +66,13 @@ let rec skip_whitespace_and_comments (state : lexer_state) =
     | _ -> ()
 
 let keyword_list = [
-  "auto"; "break"; "case"; "char"; "const"; "continue"; "default"; "do";
-  "double"; "else"; "enum"; "extern"; "float"; "for"; "goto"; "if"; "inline"; "int"; "long";
-  "register"; "restrict";   "return"; "short"; "signed";
-  "sizeof"; "static"; "struct"; "switch"; "typedef"; "union"; "unsigned"; "void"; "volatile"; "while";
-  "_Alignas"; "_Alignof"; "_Atomic"; "_Bool"; "_Complex"; "_Generic"; "_Imaginary"; "_Noreturn";
-  "_Static_assert"; "_Thread_local"; "bool";  "true"; "false"; "typeof";
+    "auto"; "break"; "case"; "char"; "const"; "continue"; "default"; "do";
+    "double"; "else"; "enum"; "extern"; "float"; "for"; "goto"; "if"; "inline"; "int"; "long";
+    "register"; "restrict"; "return"; "short"; "signed";
+    "sizeof"; "static"; "struct"; "switch"; "typedef"; "union"; "unsigned"; "void"; "volatile"; "while";
+    "_Alignas"; "_Alignof"; "_Atomic"; "_Bool"; "_Complex"; "_Generic"; "_Imaginary"; "_Noreturn";
+    "_Static_assert"; "_Thread_local"; "bool";  "true"; "false"; "typeof";
+    "nullptr";
 ]
 
 let lex_identifier_or_keyword state = 
