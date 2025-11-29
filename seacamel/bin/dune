@@ -1,4 +1,4 @@
 (executable
  (public_name seacamel)
  (name main)
- (libraries seacamel))
+ (libraries seacamel core))

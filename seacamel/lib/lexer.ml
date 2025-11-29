@@ -9,6 +9,23 @@ type token =
     | Semicolon | Comma
     | EOF
 
+let string_of_token = function
+    | Ident s -> Printf.sprintf "Ident %s" s
+    | IntLit i -> Printf.sprintf "IntLit %d" i
+    | StringLit s -> Printf.sprintf "StringLit %s" s
+    | CharLit c -> Printf.sprintf "CharLit %c" c
+    | Keyword s -> Printf.sprintf "Keyword %s" s
+    | Op s -> Printf.sprintf "Op %s" s
+    | LParen -> "LParen"
+    | RParen -> "RParen"
+    | LBrace -> "LBrace"
+    | RBrace -> "RBrace"
+    | LBracket -> "LBracket"
+    | RBracket -> "RBracket"
+    | Semicolon -> "Semicolon"
+    | Comma -> "Comma"
+    | EOF -> "EOF"
+
 type lexer_state = {
     src: string;
     mutable pos: int;
@@ -140,12 +157,13 @@ let next_token (state : lexer_state) : token =
             | '}' -> state.pos <- state.pos + 1; RBrace
             | '+' | '-' | '<' | '>' | '=' | '!' | '&' | '|' ->
                 lex_operator state
+            | ';' -> state.pos <- state.pos + 1; Semicolon
             | _ -> failwith ("Unknown character: " ^ Char.escaped c)
 
 let tokenize (program : string) : token list = 
     let st = { src = program; pos = 0; len = String.length program } in
     let rec loop acc = 
-        if st.pos >= st.len then List.rev (EOF :: acc)
+        if st.pos >= st.len then List.rev acc
         else
             let tok = next_token st in
             loop (tok :: acc)
