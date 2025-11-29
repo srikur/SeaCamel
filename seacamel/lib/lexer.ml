@@ -1,4 +1,3 @@
-
 type token = 
     | Ident of string
     | IntLit of int
@@ -49,11 +48,20 @@ let rec skip_whitespace_and_comments (state : lexer_state) =
             else ()
     | _ -> ()
 
+let keyword_list = [
+  "auto"; "break"; "case"; "char"; "const"; "continue"; "default"; "do";
+  "double"; "else"; "enum"; "extern"; "float"; "for"; "goto"; "if"; "inline"; "int"; "long";
+  "register"; "restrict";   "return"; "short"; "signed";
+  "sizeof"; "static"; "struct"; "switch"; "typedef"; "union"; "unsigned"; "void"; "volatile"; "while";
+  "_Alignas"; "_Alignof"; "_Atomic"; "_Bool"; "_Complex"; "_Generic"; "_Imaginary"; "_Noreturn";
+  "_Static_assert"; "_Thread_local"; "bool";  "true"; "false"; "typeof";
+]
+
 let lex_identifier_or_keyword state = 
     let start = state.pos in
     state.pos <- state.pos + 1;
     while state.pos < state.len &&
-            (is_alnum state.src.[state.pos] || state.src.[state.pos] = '_') do
+            (Utilities.is_alnum state.src.[state.pos] || state.src.[state.pos] = '_') do
         state.pos <- state.pos + 1
     done;
     let text = String.sub state.src start (state.pos - start) in
@@ -62,7 +70,7 @@ let lex_identifier_or_keyword state =
 let lex_number state = 
     let start = state.pos in
     state.pos <- state.pos + 1;
-    while state.pos < state.len && is_digit state.src.[state.pos] do
+    while state.pos < state.len && Utilities.is_digit state.src.[state.pos] do
         state.pos <- state.pos + 1
     done;
     IntLit (int_of_string (String.sub state.src start (state.pos - start)))
@@ -121,8 +129,8 @@ let next_token (state : lexer_state) : token =
     if state.pos >= state.len then EOF
     else
         let c = state.src.[state.pos] in
-        if is_alpha c || c = '_' then lex_identifier_or_keyword state
-        else if is_digit c then lex_number state
+        if Utilities.is_alpha c || c = '_' then lex_identifier_or_keyword state
+        else if Utilities.is_digit c then lex_number state
         else match c with
             | '"' -> lex_string state
             | '\'' -> lex_char_literal state
